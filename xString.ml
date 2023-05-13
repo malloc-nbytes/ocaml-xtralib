@@ -21,13 +21,20 @@ let string_to_char_list (str : string) : char list =
   String.to_seq str |> List.of_seq
 
 let split_on_string (str : string) (split : string) : string list =
+  let rec trim_acc (acc : char list) (num_to_remove : int) : char list =
+    match num_to_remove with
+    | 0 -> acc
+    | _ -> List.rev (List.tl (List.rev acc))
+  in
   let rec split_on_string'
             (str : char list) (split : char list) (acc : char list)
             (res : string list) (ptr1 : int) (ptr2 : int) : string list =
     match ptr1 = (List.length str) with
-    | true -> res
+    | true ->
+       (match (List.length acc) > 0 with
+        | true -> (List.append res [(char_list_to_string acc)])
+        | false -> res)
     | false ->
-       (* Printf.printf "%c -> %c\n" (List.nth str ptr1) (List.nth split ptr2); *)
        (match (List.nth str ptr1) = (List.nth split ptr2) with
         | true ->
            (match ptr2 = (List.length split) - 1 with
@@ -36,10 +43,12 @@ let split_on_string (str : string) (split : string) : string list =
                  str split []
                  (List.append res [(char_list_to_string acc)])
                  (ptr1 + 1) 0
-            | false -> split_on_string' str split acc res (ptr1 + 1) (ptr2 + 1))
+            | false -> split_on_string' str split
+                         (List.append acc [(List.nth str ptr1)])
+                         res (ptr1 + 1) (ptr2 + 1))
         | false ->
            (match ptr2 = 0 with
-            | false -> failwith "todo"
+            | false -> split_on_string' str split acc res (ptr1 - ptr2 + 1) 0
             | true ->
                split_on_string'
                  str split
@@ -49,6 +58,6 @@ let split_on_string (str : string) (split : string) : string list =
        (string_to_char_list str) (string_to_char_list split) [] [] 0 0
 
 let () =
-  let s = "this is\n\na test" in
-  let bad = "\n\n" in
-  List.iter (fun k -> k |> Printf.printf "%s") (split_on_string s bad)
+  let s = "this iszza test" in
+  let bad = "zz" in
+  List.iter (fun k -> k |> Printf.printf "item: %s\n") (split_on_string s bad)
