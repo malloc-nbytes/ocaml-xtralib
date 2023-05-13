@@ -67,7 +67,6 @@ let split_on_string (str : string) (split : string) : string list =
        [] [] 0 0
 
 let () =
-  let s = "this is a test\n" in
-  Printf.printf "%s\n" (pop s)
-                (* let bad = "\n" in *)
-                (* List.iter (fun k -> k |> Printf.printf "item: %s\n") (split_on_string s bad) *)
+  let s = "This,,is,,a,,sample, text.\n" in
+  let split = ",," in
+  List.iter (fun k -> k |> Printf.printf "item: %s\n") (split_on_string s split)
