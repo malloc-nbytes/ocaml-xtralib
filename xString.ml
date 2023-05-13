@@ -22,14 +22,26 @@ let string_to_char_list (str : string) : char list =
 
 let split_on_string (str : string) (split : string) : string list =
   let rec split_on_string'
-            (str : char list) (split : char list)
-            (history : char list) (acc : string list)
-            (count : int) : char list =
-    failwith "todo"
+            (str : char list)     (split : char list)
+            (buffer : char list)  (acc : char list)
+            (res : string list)   (ptr1 : int)
+            (ptr2 : int) : string list =
+    match ptr1 = (List.length str) with
+    | true -> failwith "convert acc -> res"
+    | false ->
+       Printf.printf "%c -> %c\n" (List.nth str ptr1) (List.nth split ptr2);
+       match (List.nth str ptr1) = (List.nth split ptr2) with
+       | true -> 
+          failwith "todo"
+       | false ->
+          split_on_string'
+            str split buffer
+            (List.append acc [(List.nth str ptr1)])
+            res (ptr1 + 1) ptr2
   in split_on_string'
-       (string_to_char_list str) (string_to_char_list split) [] [] 0
+       (string_to_char_list str) (string_to_char_list split) [] [] [] 0 0
 
 let () =
-  "this is\n\na test"
-  |> split_on_string "\n\n"
-  |> List.iter (fun k -> k |> Printf.printf "%s");
+  let s = "this is\n\na test" in
+  let bad = "\n\n" in
+  List.iter (fun k -> k |> Printf.printf "%s") (split_on_string s bad)
