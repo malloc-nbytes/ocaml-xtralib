@@ -20,6 +20,13 @@ let filter (str : string) (f : 'a -> 'b) : string =
 let string_to_char_list (str : string) : char list =
   String.to_seq str |> List.of_seq
 
+let pop (str : string) : string =
+  char_list_to_string
+    (List.rev
+       (List.tl
+          (List.rev
+             (string_to_char_list str))))
+
 let split_on_string (str : string) (split : string) : string list =
   let rec trim_acc (acc : char list) (num_to_remove : int) : char list =
     match num_to_remove with
@@ -60,6 +67,7 @@ let split_on_string (str : string) (split : string) : string list =
        [] [] 0 0
 
 let () =
-  let s = "this,is,a,test" in
-  let bad = "," in
-  List.iter (fun k -> k |> Printf.printf "item: %s\n") (split_on_string s bad)
+  let s = "this is a test\n" in
+  Printf.printf "%s\n" (pop s)
+                (* let bad = "\n" in *)
+                (* List.iter (fun k -> k |> Printf.printf "item: %s\n") (split_on_string s bad) *)
