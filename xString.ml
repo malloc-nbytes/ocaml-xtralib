@@ -24,7 +24,7 @@ let split_on_string (str : string) (split : string) : string list =
   let rec trim_acc (acc : char list) (num_to_remove : int) : char list =
     match num_to_remove with
     | 0 -> acc
-    | _ -> List.rev (List.tl (List.rev acc))
+    | _ -> trim_acc (List.rev (List.tl (List.rev acc))) (num_to_remove - 1)
   in
   let rec split_on_string'
             (str : char list) (split : char list) (acc : char list)
@@ -41,23 +41,25 @@ let split_on_string (str : string) (split : string) : string list =
             | true ->
                split_on_string'
                  str split []
-                 (List.append res [(char_list_to_string acc)])
+                 (List.append res [(char_list_to_string (trim_acc acc ptr2))])
                  (ptr1 + 1) 0
             | false -> split_on_string' str split
                          (List.append acc [(List.nth str ptr1)])
                          res (ptr1 + 1) (ptr2 + 1))
         | false ->
-           (match ptr2 = 0 with
-            | false -> split_on_string' str split acc res (ptr1 - ptr2 + 1) 0
-            | true ->
+           (match ptr2 <> 0 with
+            | true -> split_on_string' str split acc res ptr1 0
+            | false ->
                split_on_string'
                  str split
                  (List.append acc [(List.nth str ptr1)])
                  res (ptr1 + 1) ptr2))
   in split_on_string'
-       (string_to_char_list str) (string_to_char_list split) [] [] 0 0
+       (string_to_char_list str)
+       (string_to_char_list split)
+       [] [] 0 0
 
 let () =
-  let s = "this iszza test" in
-  let bad = "zz" in
+  let s = "this,is,a,test" in
+  let bad = "," in
   List.iter (fun k -> k |> Printf.printf "item: %s\n") (split_on_string s bad)
