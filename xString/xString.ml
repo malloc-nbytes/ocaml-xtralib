@@ -28,10 +28,10 @@ let pop (str : string) : string =
              (string_to_char_list str))))
 
 let split_on_string (str : string) (split : string) : string list =
-  let rec trim_acc (acc : char list) (num_to_remove : int) : char list =
-    match num_to_remove with
+  let rec trim_acc (acc : char list) (n : int) : char list =
+    match n with
     | 0 -> acc
-    | _ -> trim_acc (List.rev (List.tl (List.rev acc))) (num_to_remove - 1)
+    | _ -> trim_acc (List.rev (List.tl (List.rev acc))) (n - 1)
   in
   let rec split_on_string'
             (str : char list) (split : char list) (acc : char list)
@@ -66,7 +66,11 @@ let split_on_string (str : string) (split : string) : string list =
        (string_to_char_list split)
        [] [] 0 0
 
+let string_to_ascii_list (str : string) : int list =
+  str
+  |> string_to_char_list
+  |> List.map int_of_char
+
 let () =
-  let s = "This,,is,,a,,sample, text.\n" in
-  let split = ",," in
-  List.iter (fun k -> k |> Printf.printf "item: %s\n") (split_on_string s split)
+  "abcdefghijklmnopqrstuvwxyz" |> string_to_ascii_list |>
+  List.iter (fun s -> s |> Printf.printf "%d\n")

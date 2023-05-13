@@ -4,7 +4,17 @@ let pop (lst : 'a list) : 'a list =
 let rec pop_n_elems (lst : 'a list) (n : int) : 'a list =
   match n with
   | 0 -> lst
-  | _ -> pop (pop lst)
+  | _ -> pop_n_elems (pop lst) (n - 1)
+
+let pop_front (lst : 'a list) : 'a list =
+  match lst with
+  | [] -> []
+  | hd :: tl -> tl
+
+let rec pop_front_n_elems (lst : 'a list) (n : int) : 'a list =
+  match n with
+  | 0 -> lst
+  | _ -> pop_front_n_elems (pop_front lst) (n - 1)
 
 let rec print_list' (lst : string list) (n : int) =
   match lst with
@@ -22,4 +32,6 @@ let print_int_list (lst : int list) =
   print_list' (List.map string_of_int lst) 0
 
 let () =
-  print_string_list ["this";"is";"a";"test"]
+  let l = [1;2;3;4;5] in
+  let l2 = pop_front_n_elems l 3 in
+  print_int_list l2
