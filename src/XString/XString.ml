@@ -40,6 +40,20 @@ module XString = struct
                (string_to_char_list str))))
 
 
+  let to_uppercase (str : string) : string =
+    let rec to_uppercase' (str : char list) (acc : char list) : string =
+      match str with
+      | [] -> char_list_to_string acc
+      | hd :: tl ->
+         let hdascii = int_of_char hd in
+         (match hdascii > 96 && hdascii < 123 with
+          | true ->
+             to_uppercase'
+               tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
+          | false -> to_uppercase' tl (List.append acc [hd]))
+    in to_uppercase' (string_to_char_list str) []
+
+
   let remove_char (str : string) (del : char) : string =
     let rec remove_char'
               (str : char list) (del : char) (acc : char list)
