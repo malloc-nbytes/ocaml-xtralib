@@ -1,8 +1,12 @@
 open XList
 open XString
+open XFileIO
+
+let read_whole_file filename =
+  let ch = open_in_bin filename in
+  let s = really_input_string ch (in_channel_length ch) in
+  close_in ch;
+  s
 
 let () =
-  let s = "This,,is,,a,,test" in
-  let split = ",," in
-  XString.split_on_string s split
-  |> XList.print_string_list
+  "Hello world" |> print_endline

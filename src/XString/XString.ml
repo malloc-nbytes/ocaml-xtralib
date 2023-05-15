@@ -21,6 +21,12 @@ module XString = struct
   let string_to_char_list (str : string) : char list =
     String.to_seq str |> List.of_seq
 
+  let pop_front (str : string) : string =
+    str
+    |> string_to_char_list
+    |> List.tl
+    |> char_list_to_string
+
   let pop (str : string) : string =
     char_list_to_string
       (List.rev

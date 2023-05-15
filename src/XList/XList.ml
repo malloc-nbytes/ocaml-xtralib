@@ -17,19 +17,15 @@ module XList = struct
     | 0 -> lst
     | _ -> pop_front_n_elems (pop_front lst) (n - 1)
 
-  let rec print_list' (lst : string list) (n : int) =
-    match lst with
-    | [] -> ()
-    | hd :: tl ->
-       let _ = Printf.printf "  (%d -> %s)\n" n hd in
-       print_list' tl (n + 1)
+  let rec print_list' (lst : string list) =
+    lst |> List.iter (fun x -> x |> Printf.printf "(+) %s\n")
 
   let print_string_list (lst : string list) =
     let _ = "(print_string_list) ->" |> print_endline in
-    print_list' lst 0
+    print_list' lst
 
   let print_int_list (lst : int list) =
     let _ = "(print_int_list) ->" |> print_endline in
-    print_list' (List.map string_of_int lst) 0
+    print_list' (List.map string_of_int lst)
 end
 
