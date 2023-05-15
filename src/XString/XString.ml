@@ -34,6 +34,62 @@ module XString = struct
             (List.rev
                (string_to_char_list str))))
 
+  let remove_char (str : string) (del : char) : string =
+    let rec remove_char'
+              (str : char list) (del : char) (acc : char list)
+            : string =
+      match str with
+      | [] -> char_list_to_string acc
+      | hd :: tl ->
+         (match hd = del with
+          | true -> remove_char' tl del acc
+          | false -> remove_char' tl del (List.append acc [hd]))
+    in remove_char' (string_to_char_list str) del []
+
+  let replace_char (str : string) (repl : char) (subst : char)
+      : string =
+    let rec replace_char'
+              (str : char list) (repl : char) (subst: char) (acc : char list)
+            : string =
+      match str with
+      | [] -> char_list_to_string acc
+      | hd :: tl ->
+         (match hd = repl with
+          | true -> replace_char' tl repl subst (List.append acc [subst])
+          | false -> replace_char' tl repl subst (List.append acc [hd]))
+    in replace_char' (string_to_char_list str) repl subst []
+
+  let split_on_multiple_delims (str : string) (delims : char list)
+      : string list =
+    let rec cycle (elem : char) (delims : char list) : bool =
+      (match delims with
+       | [] -> false
+       | hd :: tl ->
+          (match hd = elem with
+           | true -> true
+           | false -> cycle elem tl))
+    in
+    let rec split_on_multiple_delims'
+              (str : char list) (delims : char list)
+              (acc : char list) (res: string list)
+            : string list =
+      (match str with
+       | [] ->
+          (match List.length acc > 0 with
+           | true -> List.append res [(char_list_to_string acc)]
+           | false -> res)
+       | hd :: tl ->
+          (match cycle hd delims with
+           | true ->
+              (match List.length acc > 0 with
+               | true ->
+                  split_on_multiple_delims'
+                    tl delims [] (List.append res [(char_list_to_string acc)])
+               | false ->
+                  split_on_multiple_delims' tl delims [] res)
+           | false -> split_on_multiple_delims' tl delims (List.append acc [hd]) res))
+    in split_on_multiple_delims' (string_to_char_list str) delims [] []
+
   let split_on_string (str : string) (split : string) : string list =
     let rec trim_acc (acc : char list) (n : int) : char list =
       match n with
