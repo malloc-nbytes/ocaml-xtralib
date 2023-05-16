@@ -41,26 +41,31 @@ module XString = struct
 
 
   let change_case (str : string) (lower_bound : int) (upper_bound) : string =
-    let rec change_case'
-              (str : char list) (acc : char list) (lower_bound : int) (upper_bound : int)
-            : string =
-      match str with
-      | [] -> char_list_to_string acc
-      | hd :: tl ->
-         let hdascii = int_of_char hd in
-         (match hdascii > lower_bound && hdascii < upper_bound with
-          | true ->
-             (match lower_bound with
-             | 96 -> 
-                change_case'
-                  tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
-                  lower_bound upper_bound
-             | 64 ->
-                change_case'
-                  tl (List.append acc [char_of_int (hdascii + (97 - 65))])
-                  lower_bound upper_bound
-             | _ -> failwith "invalid lower_bound")
-          | false -> change_case' tl (List.append acc [hd]) lower_bound upper_bound)
+    match lower_bound = 96 && upper_bound = 123,
+          lower_bound = 64 && upper_bound = 91 with
+    | (false, false) -> failwith "invalid uppper/lower bound. 
+                                  Call to_uppercase or to_lowercase."
+    | _ ->
+       let rec change_case'
+                 (str : char list) (acc : char list) (lower_bound : int) (upper_bound : int)
+               : string =
+         (match str with
+         | [] -> char_list_to_string acc
+         | hd :: tl ->
+            let hdascii = int_of_char hd in
+            (match hdascii > lower_bound && hdascii < upper_bound with
+             | true ->
+                (match lower_bound with
+                 | 96 -> 
+                    change_case'
+                      tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
+                      lower_bound upper_bound
+                 | 64 ->
+                    change_case'
+                      tl (List.append acc [char_of_int (hdascii + (97 - 65))])
+                      lower_bound upper_bound
+                 | _ -> failwith "invalid lower_bound")
+             | false -> change_case' tl (List.append acc [hd]) lower_bound upper_bound))
     in change_case' (string_to_char_list str) [] lower_bound upper_bound
 
 
