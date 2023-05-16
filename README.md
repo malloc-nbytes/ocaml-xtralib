@@ -1,2 +1,2 @@
 # ocaml-xtralib
-Extra functions that I use that would be nice in the normal stdlib of OCaml.
+Extra functions and wrappers that would be nice in the normal stdlib of OCaml.

@@ -1,9 +1,10 @@
 open XList
 open XString
+open XChar
 open XFileIO
 
-let filepath = "./input.txt"
-
 let () =
-  print_endline (XString.remove_char "this is a test" 'i')
+  let c = XChar.is_lowercase 'a' in
+  if c then print_endline "true"
+  else print_endline "false";
 

@@ -1,6 +1,9 @@
 module XList = struct
+
   let pop (lst : 'a list) : 'a list =
-    (List.rev (List.tl (List.rev lst)))
+    (List.rev
+       (List.tl
+          (List.rev lst)))
 
 
   let rec pop_n_elems (lst : 'a list) (n : int) : 'a list =
@@ -12,7 +15,7 @@ module XList = struct
   let pop_front (lst : 'a list) : 'a list =
     match lst with
     | [] -> []
-    | hd :: tl -> tl
+    | _ :: tl -> tl
 
 
   let rec pop_front_n_elems (lst : 'a list) (n : int) : 'a list =
@@ -33,5 +36,6 @@ module XList = struct
   let print_int_list (lst : int list) =
     let _ = "(print_int_list) ->" |> print_endline in
     print_list' (List.map string_of_int lst)
+
 end
 

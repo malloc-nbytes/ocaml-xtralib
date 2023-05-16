@@ -99,11 +99,11 @@ module XString = struct
       | hd :: tl ->
          (match hd = repl with
           | true ->
-             let rec app acc xs =
+             let rec append acc xs =
                match xs with
                | [] -> acc
-               | hd :: tl -> app (List.append acc [hd]) tl
-             in char_list_to_string (app (List.append acc [subst]) tl)
+               | hd :: tl -> append (List.append acc [hd]) tl
+             in char_list_to_string (append (List.append acc [subst]) tl)
           | false -> replace_char_fst' tl repl subst (List.append acc [hd]))
     in replace_char_fst' (string_to_char_list str) repl subst []
 
