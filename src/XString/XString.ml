@@ -43,30 +43,30 @@ module XString = struct
   let __change_case (str : string) (lower_bound : int) (upper_bound) : string =
     match lower_bound = 96 && upper_bound = 123,
           lower_bound = 64 && upper_bound = 91 with
-    | (false, false) -> failwith "invalid uppper/lower bound. 
-                                  Call to_uppercase or to_lowercase."
+    | (false, false) ->
+       failwith "invalid uppper/lower bound. Call to_uppercase or to_lowercase."
     | _ ->
        let rec __change_case'
-                 (str : char list) (acc : char list) (lower_bound : int) (upper_bound : int)
-               : string =
+                 (str : char list) (acc : char list)
+                 (lower_bound : int) (upper_bound : int) : string =
          (match str with
-         | [] -> char_list_to_string acc
-         | hd :: tl ->
-            let hdascii = int_of_char hd in
-            (match hdascii > lower_bound && hdascii < upper_bound with
-             | true ->
-                (match lower_bound with
-                 | 96 -> 
-                    __change_case'
-                      tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
-                      lower_bound upper_bound
-                 | 64 ->
-                    __change_case'
-                      tl (List.append acc [char_of_int (hdascii + (97 - 65))])
-                      lower_bound upper_bound
-                 | _ -> failwith "invalid lower_bound")
-             | false -> __change_case' tl (List.append acc [hd]) lower_bound upper_bound))
-    in __change_case' (string_to_char_list str) [] lower_bound upper_bound
+          | [] -> char_list_to_string acc
+          | hd :: tl ->
+             let hdascii = int_of_char hd in
+             (match hdascii > lower_bound && hdascii < upper_bound with
+              | true ->
+                 (match lower_bound with
+                  | 96 -> 
+                     __change_case'
+                       tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
+                       lower_bound upper_bound
+                  | 64 ->
+                     __change_case'
+                       tl (List.append acc [char_of_int (hdascii + (97 - 65))])
+                       lower_bound upper_bound
+                  | _ -> failwith "invalid lower_bound")
+              | false -> __change_case' tl (List.append acc [hd]) lower_bound upper_bound))
+       in __change_case' (string_to_char_list str) [] lower_bound upper_bound
 
 
   let to_uppercase (str : string) : string =
@@ -75,19 +75,6 @@ module XString = struct
 
   let to_lowercase (str : string) : string =
     __change_case str 64 91
-
-
-  let remove_char (str : string) (del : char) : string =
-    let rec remove_char'
-              (str : char list) (del : char) (acc : char list)
-            : string =
-      match str with
-      | [] -> char_list_to_string acc
-      | hd :: tl ->
-         (match hd = del with
-          | true -> remove_char' tl del acc
-          | false -> remove_char' tl del (List.append acc [hd]))
-    in remove_char' (string_to_char_list str) del []
 
 
   let replace_char (str : string) (repl : char) (subst : char) : string =
@@ -105,8 +92,8 @@ module XString = struct
 
   let replace_char_fst (str : string) (repl : char) (subst : char) : string =
     let rec replace_char_fst'
-          (str : char list) (repl : char) (subst : char) (acc: char list)
-        : string =
+              (str : char list) (repl : char) (subst : char) (acc: char list)
+            : string =
       match str with
       | [] -> char_list_to_string acc
       | hd :: tl ->
@@ -198,5 +185,37 @@ module XString = struct
     str
     |> string_to_char_list
     |> List.map int_of_char
+
+
+  let help () =
+    print_endline "(XString help)";
+    print_endline "  char_list_to_string (lst : char list) -> string";
+    print_endline "    * Convert a char list to a string.";
+    print_endline "  filter_char (str : string) (bad : char) -> string";
+    print_endline "    * Filter out a char from a string.";
+    print_endline "  filter (str : string) (f : 'a -> 'b) -> string";
+    print_endline "    * Filter out a char given a function.";
+    print_endline "  string_to_char_list (str : string) -> char list";
+    print_endline "    * Convert a string to a char list.";
+    print_endline "  pop_front (str : string) -> string";
+    print_endline "    * Remove the front-most character of a string";
+    print_endline "  pop (str : string) -> string";
+    print_endline "    * Remove the last character of a string.";
+    print_endline "  to_uppercase (str : string) -> string";
+    print_endline "    * Convert a string to uppercase.";
+    print_endline "  to_lowercase (str : string) -> string";
+    print_endline "    * Convert a string to lowercase.";
+    print_endline "  replace_char (str : string) (repl : char) (subst : char) -> string";
+    print_endline "    * Replace all occurrences of a char with a substitute.";
+    print_endline "  replace_char_fst (str : string) (repl : char) (subst : char) -> string";
+    print_endline "    * Only replace the first occurrence of a char with a substitute.";
+    print_endline "  rev (str : string) -> string";
+    print_endline "    * Reverse a string.";
+    print_endline "  split_on_chars (str : string) (delims : char list) -> string list";
+    print_endline "    * Split a string given a set of delimiters and return a string list.";
+    print_endline "  split_on_string (str : string) (split : string) -> string list";
+    print_endline "    * Split a string with the string delimiter.";
+    print_endline "  string_to_ascii_list (str : string) -> int list";
+    print_endline "    * Convert a string to an int list of ascii values.";
 end
 
