@@ -119,7 +119,7 @@ module XString = struct
        | [] -> false
        | hd :: tl ->
           (match hd = elem with
-           | true -> true
+           | true
            | false -> contains elem tl))
     in
     let rec split_on_chars'
@@ -142,11 +142,6 @@ module XString = struct
 
 
   let split_on_string (str : string) (split : string) : string list =
-    let rec trim_acc (acc : char list) (n : int) : char list =
-      match n with
-      | 0 -> acc
-      | _ -> trim_acc (List.rev (List.tl (List.rev acc))) (n - 1)
-    in
     let rec split_on_string'
               (str : char list) (split : char list) (acc : char list)
               (res : string list) (ptr1 : int) (ptr2 : int) : string list =
@@ -160,6 +155,11 @@ module XString = struct
           | true ->
              (match ptr2 = (List.length split) - 1 with
               | true ->
+                 let rec trim_acc (acc : char list) (n : int) : char list =
+                   match n with
+                   | 0 -> acc
+                   | _ -> trim_acc (List.rev (List.tl (List.rev acc))) (n - 1)
+                 in
                  split_on_string'
                    str split []
                    (List.append res [(char_list_to_string (trim_acc acc ptr2))])

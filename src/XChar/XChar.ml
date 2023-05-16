@@ -19,7 +19,7 @@ module XChar = struct
     c > 47 && c < 58
 
 
-  let is_alnum (c : char) : bool =
+  let is_alphanumeric (c : char) : bool =
     is_alphabetic c || is_numeric c
 
 
