@@ -40,13 +40,13 @@ module XString = struct
                (string_to_char_list str))))
 
 
-  let change_case (str : string) (lower_bound : int) (upper_bound) : string =
+  let __change_case (str : string) (lower_bound : int) (upper_bound) : string =
     match lower_bound = 96 && upper_bound = 123,
           lower_bound = 64 && upper_bound = 91 with
     | (false, false) -> failwith "invalid uppper/lower bound. 
                                   Call to_uppercase or to_lowercase."
     | _ ->
-       let rec change_case'
+       let rec __change_case'
                  (str : char list) (acc : char list) (lower_bound : int) (upper_bound : int)
                : string =
          (match str with
@@ -57,24 +57,24 @@ module XString = struct
              | true ->
                 (match lower_bound with
                  | 96 -> 
-                    change_case'
+                    __change_case'
                       tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
                       lower_bound upper_bound
                  | 64 ->
-                    change_case'
+                    __change_case'
                       tl (List.append acc [char_of_int (hdascii + (97 - 65))])
                       lower_bound upper_bound
                  | _ -> failwith "invalid lower_bound")
-             | false -> change_case' tl (List.append acc [hd]) lower_bound upper_bound))
-    in change_case' (string_to_char_list str) [] lower_bound upper_bound
+             | false -> __change_case' tl (List.append acc [hd]) lower_bound upper_bound))
+    in __change_case' (string_to_char_list str) [] lower_bound upper_bound
 
 
   let to_uppercase (str : string) : string =
-    change_case str 96 123
+    __change_case str 96 123
 
 
   let to_lowercase (str : string) : string =
-    change_case str 64 91
+    __change_case str 64 91
 
 
   let remove_char (str : string) (del : char) : string =
@@ -101,6 +101,24 @@ module XString = struct
           | true -> replace_char' tl repl subst (List.append acc [subst])
           | false -> replace_char' tl repl subst (List.append acc [hd]))
     in replace_char' (string_to_char_list str) repl subst []
+
+
+  let replace_char_fst (str : string) (repl : char) (subst : char) : string =
+    let rec replace_char_fst'
+          (str : char list) (repl : char) (subst : char) (acc: char list)
+        : string =
+      match str with
+      | [] -> char_list_to_string acc
+      | hd :: tl ->
+         (match hd = repl with
+          | true ->
+             let rec app acc xs =
+               match xs with
+               | [] -> acc
+               | hd :: tl -> app (List.append acc [hd]) tl
+             in char_list_to_string (app (List.append acc [subst]) tl)
+          | false -> replace_char_fst' tl repl subst (List.append acc [hd]))
+    in replace_char_fst' (string_to_char_list str) repl subst []
 
 
   let rev (str : string) : string =
