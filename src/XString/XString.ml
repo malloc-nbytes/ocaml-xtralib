@@ -90,8 +90,7 @@ module XString = struct
     in remove_char' (string_to_char_list str) del []
 
 
-  let replace_char (str : string) (repl : char) (subst : char)
-      : string =
+  let replace_char (str : string) (repl : char) (subst : char) : string =
     let rec replace_char'
               (str : char list) (repl : char) (subst: char) (acc : char list)
             : string =
@@ -102,6 +101,10 @@ module XString = struct
           | true -> replace_char' tl repl subst (List.append acc [subst])
           | false -> replace_char' tl repl subst (List.append acc [hd]))
     in replace_char' (string_to_char_list str) repl subst []
+
+
+  let rev (str : string) : string =
+    char_list_to_string (List.rev (string_to_char_list str))
 
 
   let split_on_chars (str : string) (delims : char list)

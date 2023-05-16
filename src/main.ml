@@ -5,4 +5,4 @@ open XFileIO
 let filepath = "./input.txt"
 
 let () =
-  Printf.printf "%s\n" (XString.to_lowercase "THIS IS A TEST")
+  Printf.printf "%s\n" (XString.rev "this is a test")
