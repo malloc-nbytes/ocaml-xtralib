@@ -40,18 +40,36 @@ module XString = struct
                (string_to_char_list str))))
 
 
-  let to_uppercase (str : string) : string =
-    let rec to_uppercase' (str : char list) (acc : char list) : string =
+  let change_case (str : string) (lower_bound : int) (upper_bound) : string =
+    let rec change_case'
+              (str : char list) (acc : char list) (lower_bound : int) (upper_bound : int)
+            : string =
       match str with
       | [] -> char_list_to_string acc
       | hd :: tl ->
          let hdascii = int_of_char hd in
-         (match hdascii > 96 && hdascii < 123 with
+         (match hdascii > lower_bound && hdascii < upper_bound with
           | true ->
-             to_uppercase'
-               tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
-          | false -> to_uppercase' tl (List.append acc [hd]))
-    in to_uppercase' (string_to_char_list str) []
+             (match lower_bound with
+             | 96 -> 
+                change_case'
+                  tl (List.append acc [char_of_int ((hdascii - 97) + 65)])
+                  lower_bound upper_bound
+             | 64 ->
+                change_case'
+                  tl (List.append acc [char_of_int (hdascii + (97 - 65))])
+                  lower_bound upper_bound
+             | _ -> failwith "invalid lower_bound")
+          | false -> change_case' tl (List.append acc [hd]) lower_bound upper_bound)
+    in change_case' (string_to_char_list str) [] lower_bound upper_bound
+
+
+  let to_uppercase (str : string) : string =
+    change_case str 96 123
+
+
+  let to_lowercase (str : string) : string =
+    change_case str 64 91
 
 
   let remove_char (str : string) (del : char) : string =
