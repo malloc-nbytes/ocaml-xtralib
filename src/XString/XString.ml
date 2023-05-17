@@ -50,7 +50,7 @@ module XString = struct
                (string_to_char_list str))))
 
 
-  let __change_case (str : string) (lower_bound : int) (upper_bound) : string =
+  let __change_case (str : string) (lower_bound : int) (upper_bound : int) : string =
     match lower_bound = 96 && upper_bound = 123,
           lower_bound = 64 && upper_bound = 91 with
     | (false, false) ->
@@ -196,36 +196,4 @@ module XString = struct
     |> string_to_char_list
     |> List.map int_of_char
 
-
-  let help () =
-    print_endline "(XString help)";
-    print_endline "  char_list_to_string (lst : char list) -> string";
-    print_endline "    * Convert a char list to a string.";
-    print_endline "  filter_char (str : string) (bad : char) -> string";
-    print_endline "    * Filter out a char from a string.";
-    print_endline "  filter (str : string) (f : 'a -> 'b) -> string";
-    print_endline "    * Filter out a char given a function.";
-    print_endline "  string_to_char_list (str : string) -> char list";
-    print_endline "    * Convert a string to a char list.";
-    print_endline "  pop_front (str : string) -> string";
-    print_endline "    * Remove the front-most character of a string";
-    print_endline "  pop (str : string) -> string";
-    print_endline "    * Remove the last character of a string.";
-    print_endline "  to_uppercase (str : string) -> string";
-    print_endline "    * Convert a string to uppercase.";
-    print_endline "  to_lowercase (str : string) -> string";
-    print_endline "    * Convert a string to lowercase.";
-    print_endline "  replace_char (str : string) (repl : char) (subst : char) -> string";
-    print_endline "    * Replace all occurrences of a char with a substitute.";
-    print_endline "  replace_char_fst (str : string) (repl : char) (subst : char) -> string";
-    print_endline "    * Only replace the first occurrence of a char with a substitute.";
-    print_endline "  rev (str : string) -> string";
-    print_endline "    * Reverse a string.";
-    print_endline "  split_on_chars (str : string) (delims : char list) -> string list";
-    print_endline "    * Split a string given a set of delimiters and return a string list.";
-    print_endline "  split_on_string (str : string) (split : string) -> string list";
-    print_endline "    * Split a string with the string delimiter.";
-    print_endline "  string_to_ascii_list (str : string) -> int list";
-    print_endline "    * Convert a string to an int list of ascii values.";
 end
-
