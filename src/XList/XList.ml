@@ -38,6 +38,28 @@ module XList = struct
     __print_list (List.map string_of_int lst)
 
 
+  let min (lst : int list) : int =
+    let rec min' (lst : int list) (min : int) : int =
+      match lst with
+      | [] -> min
+      | hd :: tl ->
+         (match hd < min with
+         | true -> min' tl hd
+         | false -> min' tl min)
+    in min' (List.tl lst) (List.nth lst 0)
+
+
+  let max (lst : int list) : int =
+    let rec max' (lst : int list) (max : int) : int =
+      match lst with
+      | [] -> max
+      | hd :: tl ->
+         (match hd > max with
+         | true -> max' tl hd
+         | false -> max' tl max)
+    in max' (List.tl lst) (List.nth lst 0)
+
+
   let nth (lst : 'a list) (i : int) : 'a list option =
     let rec nth' (lst : 'a list) (i : int) (idx : int) : 'a list option =
       match i = idx with
