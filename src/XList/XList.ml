@@ -38,6 +38,20 @@ module XList = struct
     __print_list (List.map string_of_int lst)
 
 
+  let nth (lst : 'a list) (i : int) : 'a list option =
+    let rec nth' (lst : 'a list) (i : int) (idx : int) : 'a list option =
+      match i = idx with
+      | true -> Some lst
+      | false -> nth' (List.tl lst) i (idx + 1)
+    in nth' lst i 0
+
+
+  let unwrap_list (lst : 'a list option) : 'a list =
+    match lst with
+    | Some k -> k
+    | None -> failwith "called unwrap on None value"
+
+
   let has_some_ret_fst (lst : 'a list) : 'a option =
     match List.length lst with
     | 0 -> None

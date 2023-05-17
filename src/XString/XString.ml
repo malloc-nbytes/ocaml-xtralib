@@ -32,6 +32,16 @@ module XString = struct
     |> char_list_to_string
 
 
+  let pop_front_n_elems (str : string) (i : int) : string =
+    let rec pop_front_n_elems' (str : char list) (i : int) : string =
+      match str with
+      | [] -> char_list_to_string str
+      | hd :: tl ->
+         (match i with
+         | 0 -> char_list_to_string tl
+         | _ -> pop_front_n_elems' tl (i - 1))
+    in pop_front_n_elems' (string_to_char_list str) i
+
   let pop (str : string) : string =
     char_list_to_string
       (List.rev
