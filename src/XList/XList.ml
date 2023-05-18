@@ -50,9 +50,7 @@ module XList = struct
     let rec for_each' (lst : 'a list) (f : 'a -> 'b) =
       match lst with
       | [] -> ()
-      | hd :: tl ->
-         let _ = hd |> f in
-         for_each' tl f
+      | hd :: tl -> let _ = hd |> f in for_each' tl f
     in for_each' lst f
 
 
