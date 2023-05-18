@@ -46,6 +46,16 @@ module XList = struct
     in int_sum' lst 0
 
 
+  let for_each (lst : 'a list) (f : 'a -> 'b) =
+    let rec for_each' (lst : 'a list) (f : 'a -> 'b) =
+      match lst with
+      | [] -> ()
+      | hd :: tl ->
+         let _ = hd |> f in
+         for_each' tl f
+    in for_each' lst f
+
+
   let int_min (lst : int list) : int =
     let rec int_min' (lst : int list) (min : int) : int =
       match lst with

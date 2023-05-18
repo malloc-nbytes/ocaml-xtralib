@@ -4,5 +4,6 @@ open XChar
 open XFileIO
 
 let () =
-  Printf.printf "%d\n" (XList.int_sum [1;2;3])
+  let lst = [1;2;3;4;5] in
+  XList.for_each lst (fun x -> Printf.printf "%d\n" x)
 
