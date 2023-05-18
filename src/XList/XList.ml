@@ -38,6 +38,14 @@ module XList = struct
     __print_list (List.map string_of_int lst)
 
 
+  let int_sum (lst : int list) : int =
+    let rec int_sum' (lst : int list) (sum : int) : int =
+      match lst with
+      | [] -> sum
+      | hd :: tl -> int_sum' tl (sum + hd)
+    in int_sum' lst 0
+
+
   let int_min (lst : int list) : int =
     let rec int_min' (lst : int list) (min : int) : int =
       match lst with

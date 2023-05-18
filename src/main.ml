@@ -4,5 +4,5 @@ open XChar
 open XFileIO
 
 let () =
-  Printf.printf "%d\n" (XList.int_max [7;2;4;1;5])
+  Printf.printf "%d\n" (XList.int_sum [1;2;3])
 
