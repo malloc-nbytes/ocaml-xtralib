@@ -129,7 +129,7 @@ module XString = struct
        | [] -> false
        | hd :: tl ->
           (match hd = elem with
-           | true
+           | true -> true
            | false -> contains elem tl))
     in
     let rec split_on_chars'
