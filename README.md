@@ -1,6 +1,6 @@
 # ocaml-xtralib
-  <img src="https://img.shields.io/badge/OCaml-EC6813?logo=ocaml&logoColor=black&style=for-the-badge" height="40" alt="ocaml logo"  />
-  <img width="12" />
+<img src="https://img.shields.io/badge/OCaml-EC6813?logo=ocaml&logoColor=black&style=for-the-badge" height="40" alt="ocaml logo"  />
+<img width="12" />
 
 Extra functions and wrappers that would be nice in the stdlib of OCaml.
 
