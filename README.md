@@ -298,4 +298,333 @@ item: 102
 item: 103
 ```
 
-## TODO
+## module XList
+
+### `pop`
+`pop (lst : 'a list) : 'a list`
+
+Remove the last element in a list.
+
+Example:
+```ml
+open XList
+
+let () =
+  List.iter (fun x -> Printf.printf "%d\n" x)
+    (XList.pop [1;2;3;4;5])
+```
+Output:
+```
+1
+2
+3
+4
+```
+
+### `pop_n_elems`
+`pop_n_elems (lst : 'a list) (n : int) : 'a list`
+
+Remove `n` elements from the end of the list.
+
+Example:
+```ml
+open XList
+
+let () =
+  List.iter (fun x -> Printf.printf "item: %d\n" x)
+    (XList.pop_n_elems [1;2;3;4;5] 3)
+```
+Output:
+```
+1
+2
+```
+
+### `pop_front`
+`pop_front (lst : 'a list) : 'a list`
+
+Remove the first element in a list.
+
+Example:
+```ml
+open XList
+
+let () =
+  List.iter (fun x -> Printf.printf "%d\n" x)
+    (XList.pop_front [1;2;3;4;5])
+```
+Output:
+```
+2
+3
+4
+5
+```
+
+### `pop_front_n_elems`
+`pop_front_n_elems (lst : 'a list) (n : int) : 'a list`
+
+Remove `n` elements at the front of the list.
+
+Example:
+```ml
+open XList
+
+let () =
+  List.iter (fun x -> Printf.printf "%d\n" x)
+    (XList.pop_front_n_elems [1;2;3;4;5] 2)
+```
+Output:
+```
+3
+4
+5
+```
+
+### `print_string_list`
+`print_string_list (lst : string list)`
+
+Print a string list.
+
+Example:
+```ml
+open XList
+
+let () =
+  XList.print_string_list ["foo"; "bar"; "baz"]
+```
+Output:
+```
+(print_string_list) ->
+(+) foo
+(+) bar
+(+) baz
+```
+
+### `print_int_list`
+`print_int_list (lst : int list)`
+
+Print an int list.
+
+Example:
+```ml
+open XList
+
+let () =
+  XList.print_int_list [1;2;3;4;5]
+```
+Output:
+```
+(print_int_list) ->
+(+) 1
+(+) 2
+(+) 3
+(+) 4
+(+) 5
+```
+
+### `int_sum`
+`int_sum (lst : int list) : int`
+
+Return the sum of an int list.
+
+Example:
+```ml
+open XList
+
+let () =
+  Printf.printf "%d\n" (XList.int_sum [4;2;1;6;5])
+```
+Output:
+```
+18
+```
+
+### `for_each`
+`for_each (lst : 'a list) (f : 'a -> 'b)`
+
+Apply an immutable function on each element.
+
+Example:
+```ml
+open XList
+
+let func (elem : int) : unit =
+  match elem mod 2 = 0 with
+  | true -> print_endline "even"
+  | false -> print_endline "odd"
+
+let () =
+  XList.for_each [1;2;3;4;5] func
+```
+Output:
+```
+odd
+even
+odd
+even
+odd
+```
+
+### `int_min`
+`int_min (lst : int list) : int`
+
+Return the minimum element of an int list.
+
+Example:
+```ml
+open XList
+
+let () =
+  Printf.printf "%d\n" (XList.int_min [5;3;1;2])
+```
+Output:
+```
+1
+```
+
+### `int_max`
+`int_max (lst : int list) : int`
+
+Return the maximum element of an int list.
+
+Example:
+```ml
+open XList
+
+let () =
+  Printf.printf "%d\n" (XList.int_min [5;3;1;2])
+```
+Output:
+```
+5
+```
+
+### `nth`
+`nth (lst : 'a list) (i : int) : 'a list option`
+
+Given index `i`, return the slice of the list as an option after and including index `i`: (`Some lst[i..((List.length lst) - 1)]`).
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = [1;2;3;4;5] in
+  match XList.nth lst 3 with
+  | Some k -> List.iter (fun x -> Printf.printf "%d\n" x) k
+  | _ -> failwith "List is none"
+```
+Output:
+```
+4
+5
+```
+
+### `unwrap_list`
+`unwrap_list (lst : 'a list option) : 'a list`
+
+Return the list inside of an option.
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = Some [1;2;3;4;5] in
+  List.iter (fun x -> Printf.printf "%d\n" x)
+    (XList.unwrap_list lst)
+```
+Output:
+```
+1
+2
+3
+4
+5
+```
+
+### `has_some_ret_fst`
+`has_some_ret_fst (lst : 'a list) : 'a option`
+
+Return the head of a list as an option.
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = [1;2;3;4;5] in
+  match XList.has_some_ret_fst lst with
+  | Some k -> Printf.printf "%d\n" k
+  | _ -> failwith "Element does not exist"
+```
+Output:
+```
+1
+```
+
+### `has_some_ret_last`
+`has_some_ret_last (lst : 'a list) : 'a option`
+
+Return the last element of a list as an option.
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = [1;2;3;4;5] in
+  match XList.has_some_ret_last lst with
+  | Some k -> Printf.printf "%d\n" k
+  | _ -> failwith "Element does not exist"
+```
+Output:
+```
+5
+```
+
+### `has_some_ret_tl`
+`has_some_ret_tl (lst : 'a list) : 'a list option`
+
+Return the tail of a list as a list option.
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = [1;2;3;4;5] in
+  match XList.has_some_ret_tl lst with
+  | Some k -> List.iter (fun x -> Printf.printf "%d\n" x) k
+  | _ -> failwith "tail is none"
+```
+Output:
+```
+2
+3
+4
+5
+```
+
+### `has_some_ret_hd`
+`has_some_ret_hd (lst : 'a list) : 'a list option`
+
+Return the head of a list as a list option.
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = [1;2;3;4;5] in
+  match XList.has_some_ret_hd lst with
+  | Some k -> List.iter (fun x -> Printf.printf "%d\n" x) k
+  | _ -> failwith "tail is none"
+```
+Output:
+```
+1
+```
+
+TODO
