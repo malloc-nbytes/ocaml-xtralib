@@ -4,7 +4,7 @@ Extra functions and wrappers that would be nice in the normal stdlib of OCaml.
 ## module XString
 
 ### `char_list_to_string`
-`char_list_to_string (lst : char list) : string`
+`char list -> string`
 
 Convert a char list to a string.
 
@@ -23,7 +23,7 @@ abc
 ```
 
 ### `filter_char`
-`filter_char (str : string) (bad : char) : string`
+`string -> char -> string`
 
 Filter out a character from a string.
 
@@ -41,7 +41,7 @@ Heo Word!
 ```
 
 ### `filter`
-`filter (str : string) (f : 'a -> 'b) : string`
+`string -> (char -> bool) -> string`
 
 Filter out characters given a predicate.
 
@@ -60,7 +60,7 @@ Ho Word!
 ```
 
 ### `string_to_char_list`
-`string_to_char_list (str : string) : char list`
+`string -> char list`
 
 Convert a string to a char list.
 
@@ -78,7 +78,7 @@ Hello world
 ```
 
 ### `pop_front`
-`pop_front (str : string) : string`
+`string -> string`
 
 Remove the front-most character in a string.
 
@@ -99,7 +99,7 @@ ello world
 ```
 
 ### `pop_front_n_elems`
-`pop_front_n_elems (str : string) (n : int) : string`
+`string -> int -> string`
 
 Pop `n` number of elements from the front.
 
@@ -120,7 +120,7 @@ o world
 ```
 
 ### `pop`
-`pop (str : string) : string`
+`string -> string`
 
 Remove the last character.
 
@@ -141,7 +141,7 @@ Hello worl
 ```
 
 ### `to_uppercase`
-`to_uppercase (str : string) : string`
+`string -> string`
 
 Convert a string to uppercase.
 
@@ -159,7 +159,7 @@ HELLO WORLD
 ```
 
 ### `to_lowercase`
-`to_lowercase (str : string) : string`
+`string -> string`
 
 Convert a string to lowercase.
 
@@ -177,9 +177,9 @@ hello world
 ```
 
 ### `replace_char`
-`replace_char (str : string) (repl : char) (subst : char) : string`
+`string -> char -> char -> string`
 
-Replace all characters that match `repl` with `subst`.
+Replace all characters that match a given character with a substitute.
 
 Example:
 ```ml
@@ -195,9 +195,9 @@ Hexxo worxd
 ```
 
 ### `replace_char_fst`
-`replace_char_fst (str : string) (repl : char) (subst : char) : string`
+`string -> char -> char -> string`
 
-Replace only the first character `repl` with `subst`.
+Replace the first character that matches a given character with a substitute.
 
 Example:
 ```ml
@@ -213,7 +213,7 @@ Hexlo world
 ```
 
 ### `rev`
-`rev (str : string) : string`
+`string -> string`
 
 Reverse a string.
 
@@ -231,9 +231,9 @@ dlrow olleH
 ```
 
 ### `split_on_chars`
-`split_on_chars (str : string) (delims : char list) : string list`
+`string -> char list -> string list`
 
-Split `str` into a string list by `delims`.
+Split a string into a string list by a char list of delimiters.
 
 Example:
 ```ml
@@ -253,9 +253,9 @@ item: baz
 ```
 
 ### `split_on_string`
-`split_on_string (str : string) (split : string) : string list`
+`string -> string -> string list`
 
-Split `str` by `split`.
+Split a string by a given string delimiter.
 
 Example:
 ```ml
@@ -275,9 +275,9 @@ item: baz
 ```
 
 ### `string_to_ascii_list`
-`string_to_ascii_list (str : string) : int list`
+`string -> int list`
 
-Convert a `str` to an int list consisting of ascii values.
+Convert a string to an int list consisting of ascii values.
 
 Example:
 ```ml
@@ -301,7 +301,7 @@ item: 103
 ## module XList
 
 ### `pop`
-`pop (lst : 'a list) : 'a list`
+`'a list -> 'a list`
 
 Remove the last element in a list.
 
@@ -322,7 +322,7 @@ Output:
 ```
 
 ### `pop_n_elems`
-`pop_n_elems (lst : 'a list) (n : int) : 'a list`
+`'a list -> int -> 'a list`
 
 Remove `n` elements from the end of the list.
 
@@ -341,7 +341,7 @@ Output:
 ```
 
 ### `pop_front`
-`pop_front (lst : 'a list) : 'a list`
+`'a list -> 'a list`
 
 Remove the first element in a list.
 
@@ -362,7 +362,7 @@ Output:
 ```
 
 ### `pop_front_n_elems`
-`pop_front_n_elems (lst : 'a list) (n : int) : 'a list`
+`'a list -> int -> 'a list`
 
 Remove `n` elements at the front of the list.
 
@@ -382,7 +382,7 @@ Output:
 ```
 
 ### `print_string_list`
-`print_string_list (lst : string list)`
+`string list -> unit`
 
 Print a string list.
 
@@ -402,7 +402,7 @@ Output:
 ```
 
 ### `print_int_list`
-`print_int_list (lst : int list)`
+`int list -> unit`
 
 Print an int list.
 
@@ -424,7 +424,7 @@ Output:
 ```
 
 ### `int_sum`
-`int_sum (lst : int list) : int`
+`int list -> int`
 
 Return the sum of an int list.
 
@@ -441,7 +441,7 @@ Output:
 ```
 
 ### `for_each`
-`for_each (lst : 'a list) (f : 'a -> 'b)`
+`'a list -> ('a -> 'b) -> unit`
 
 Apply an immutable function on each element.
 
@@ -467,7 +467,7 @@ odd
 ```
 
 ### `int_min`
-`int_min (lst : int list) : int`
+`int list -> int`
 
 Return the minimum element of an int list.
 
@@ -484,7 +484,7 @@ Output:
 ```
 
 ### `int_max`
-`int_max (lst : int list) : int`
+`int list -> int`
 
 Return the maximum element of an int list.
 
@@ -501,7 +501,7 @@ Output:
 ```
 
 ### `nth`
-`nth (lst : 'a list) (i : int) : 'a list option`
+`'a list -> int -> 'a list option`
 
 Given index `i`, return the slice of the list as an option after and including index `i`: (`Some lst[i..((List.length lst) - 1)]`).
 
@@ -522,7 +522,7 @@ Output:
 ```
 
 ### `unwrap_list`
-`unwrap_list (lst : 'a list option) : 'a list`
+`'a list option -> 'a list`
 
 Return the list inside of an option.
 
@@ -545,7 +545,7 @@ Output:
 ```
 
 ### `has_some_ret_fst`
-`has_some_ret_fst (lst : 'a list) : 'a option`
+`'a list -> 'a option`
 
 Return the head of a list as an option.
 
@@ -565,7 +565,7 @@ Output:
 ```
 
 ### `has_some_ret_last`
-`has_some_ret_last (lst : 'a list) : 'a option`
+`'a list -> 'a option`
 
 Return the last element of a list as an option.
 
@@ -585,7 +585,7 @@ Output:
 ```
 
 ### `has_some_ret_tl`
-`has_some_ret_tl (lst : 'a list) : 'a list option`
+`'a list -> 'a list option`
 
 Return the tail of a list as a list option.
 
@@ -608,7 +608,7 @@ Output:
 ```
 
 ### `has_some_ret_hd`
-`has_some_ret_hd (lst : 'a list) : 'a list option`
+`'a list -> 'a list option`
 
 Return the head of a list as a list option.
 
@@ -637,7 +637,7 @@ More text.
 ```
 
 ### `file_to_string`
-`file_to_string (filepath : string) : string`
+`string -> string`
 
 Read in contents of a file as a string.
 
@@ -659,7 +659,7 @@ More text.
 ```
 
 ### `file_to_string_list`
-`file_to_string_list ?(delim='\n') (filepath : string) : string list`
+`?delim:char -> string -> string list`
 
 Read in data from a file and return a string list split on `delim`. By default, `delim` is `\n`.
 
@@ -686,7 +686,7 @@ More text
 ## module XChar
 
 ### `is_lowercase`
-`is_lowercase (c : char) : bool`
+`char -> bool`
 
 Checks to see if a char is lowercase.
 
@@ -705,7 +705,7 @@ false
 ```
 
 ### `is_uppercase`
-`is_uppercase (c : char) : bool`
+`char -> bool`
 
 Checks to see if a char is uppercase.
 
@@ -724,7 +724,7 @@ true
 ```
 
 ### `is_alphabetic`
-`is_alphabetic (c : char) : bool`
+`char -> bool`
 
 Checks to see if a char is alphabetic.
 
@@ -743,7 +743,7 @@ false
 ```
 
 ### `is_numeric`
-`is_numeric (c : char) : bool`
+`char -> bool`
 
 Checks to see if a char is numeric.
 
@@ -762,7 +762,7 @@ false
 ```
 
 ### `is_alphanumeric`
-`is_alphanumeric (c : char) : bool`
+`char -> bool`
 
 Checks to see if a char is alphanumeric.
 
