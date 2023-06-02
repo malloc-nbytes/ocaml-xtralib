@@ -1,5 +1,5 @@
 # ocaml-xtralib
-Extra functions and wrappers that would be nice in the normal stdlib of OCaml.
+Extra functions and wrappers that would be nice in the stdlib of OCaml.
 
 ## module XString
 
