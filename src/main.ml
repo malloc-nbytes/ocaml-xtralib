@@ -1,7 +1,6 @@
-open XList
+open XChar
 
 let () =
-  let lst = [1;2;3;4;5] in
-  match XList.has_some_ret_hd lst with
-  | Some k -> List.iter (fun x -> Printf.printf "%d\n" x) k
-  | _ -> failwith "tail is none"
+  let _ = Printf.printf "%b\n" (XChar.is_alphanumeric '1') in
+  let _ = Printf.printf "%b\n" (XChar.is_alphanumeric 'a') in
+  Printf.printf "%b\n" (XChar.is_numeric '~')

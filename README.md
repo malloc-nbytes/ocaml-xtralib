@@ -627,4 +627,157 @@ Output:
 1
 ```
 
-TODO
+## module XFileIO
+
+Assume a file `input.txt` contains the following:
+```
+Hello World!
+This is some text.
+More text.
+```
+
+### `file_to_string`
+`file_to_string (filepath : string) : string`
+
+Read in contents of a file as a string.
+
+Example:
+```ml
+open XFileIO
+
+let filepath = "./input.txt"
+
+let () =
+  let str = XFileIO.file_to_string filepath in
+  print_endline str
+```
+Output:
+```
+Hello World!
+This is some text.
+More text.
+```
+
+### `file_to_string_list`
+`file_to_string_list ?(delim='\n') (filepath : string) : string list`
+
+Read in data from a file and return a string list split on `delim`. By default, `delim` is `\n`.
+
+Example:
+```ml
+open XFileIO
+
+let filepath = "./input.txt"
+
+let () =
+  let lst = XFileIO.file_to_string_list ~delim:'.' filepath in
+  List.iter (fun s -> print_endline s) lst
+```
+
+Output:
+```
+Hello World!
+This is some text
+
+More text
+
+```
+
+## module XChar
+
+### `is_lowercase`
+`is_lowercase (c : char) : bool`
+
+Checks to see if a char is lowercase.
+
+Example:
+```ml
+open XChar
+
+let () =
+  let _ = Printf.printf "%b\n" (XChar.is_lowercase 'a') in
+  Printf.printf "%b\n" (XChar.is_lowercase 'A')
+```
+Output:
+```
+true
+false
+```
+
+### `is_uppercase`
+`is_uppercase (c : char) : bool`
+
+Checks to see if a char is uppercase.
+
+Example:
+```ml
+open XChar
+
+let () =
+  let _ = Printf.printf "%b\n" (XChar.is_uppercase 'a') in
+  Printf.printf "%b\n" (XChar.is_uppercase 'A')
+```
+Output:
+```
+false
+true
+```
+
+### `is_alphabetic`
+`is_alphabetic (c : char) : bool`
+
+Checks to see if a char is alphabetic.
+
+Example:
+```ml
+open XChar
+
+let () =
+  let _ = Printf.printf "%b\n" (XChar.is_alphabetic 'a') in
+  Printf.printf "%b\n" (XChar.is_alphabetic '1')
+```
+Output:
+```
+true
+false
+```
+
+### `is_numeric`
+`is_numeric (c : char) : bool`
+
+Checks to see if a char is numeric.
+
+Example:
+```ml
+open XChar
+
+let () =
+  let _ = Printf.printf "%b\n" (XChar.is_numeric '1') in
+  Printf.printf "%b\n" (XChar.is_numeric 'a')
+```
+Output:
+```
+true
+false
+```
+
+### `is_alphanumeric`
+`is_alphanumeric (c : char) : bool`
+
+Checks to see if a char is alphanumeric.
+
+Example:
+```ml
+open XChar
+
+let () =
+  let _ = Printf.printf "%b\n" (XChar.is_alphanumeric '1') in
+  let _ = Printf.printf "%b\n" (XChar.is_alphanumeric 'a') in
+  Printf.printf "%b\n" (XChar.is_numeric '~')
+```
+Output:
+```
+true
+true
+false
+```
