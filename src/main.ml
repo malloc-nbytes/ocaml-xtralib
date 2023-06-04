@@ -1,6 +1,6 @@
-open XChar
+open XList
 
 let () =
-  let _ = Printf.printf "%b\n" (XChar.is_alphanumeric '1') in
-  let _ = Printf.printf "%b\n" (XChar.is_alphanumeric 'a') in
-  Printf.printf "%b\n" (XChar.is_numeric '~')
+  let lst = [1;2;3;4;5] in
+  List.iter (fun x -> Printf.printf "%d\n" x)
+    (XList.prepend lst 99)

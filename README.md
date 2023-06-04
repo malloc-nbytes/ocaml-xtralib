@@ -630,6 +630,30 @@ Output:
 1
 ```
 
+### `prepend`
+`'a list -> 'a -> 'a list`
+
+Add an item at the beginning of a list.
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = [1;2;3;4;5] in
+  List.iter (fun x -> Printf.printf "%d\n" x)
+    (XList.prepend lst 99)
+```
+Output:
+```
+99
+1
+2
+3
+4
+5
+```
+
 ## module XFileIO
 
 Assume a file `input.txt` contains the following:

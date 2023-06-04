@@ -113,4 +113,8 @@ module XList = struct
     | 0 -> None
     | _ -> Some [(List.hd lst)]
 
+
+  let prepend (lst : 'a list) (elem : 'a) : 'a list =
+    List.rev (List.append (List.rev lst) [elem])
+
 end
