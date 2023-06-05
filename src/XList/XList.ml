@@ -117,4 +117,12 @@ module XList = struct
   let prepend (lst : 'a list) (elem : 'a) : 'a list =
     List.rev (List.append (List.rev lst) [elem])
 
+
+  let from_range (i : int) (k : int) : int list =
+    let rec from_range' i k (acc : int list) : int list =
+      match i > k with
+      | true -> acc
+      | false -> from_range' (i + 1) k (List.append acc [i])
+    in from_range' i k []
+
 end

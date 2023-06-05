@@ -654,6 +654,28 @@ Output:
 5
 ```
 
+### `from_range`
+`int -> int -> int list`
+
+Create a list from a range.
+
+Example:
+```ml
+open XList
+
+let () =
+  let lst = XList.from_range 1 5 in
+  List.iter (fun x -> Printf.printf "%d\n" x) lst
+```
+Output:
+```
+1
+2
+3
+4
+5
+```
+
 ## module XFileIO
 
 Assume a file `input.txt` contains the following:
